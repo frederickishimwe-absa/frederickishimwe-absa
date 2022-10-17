@@ -1,5 +1,4 @@
 FROM  ubuntu:latest
-
 USER root
 
 ENV  TZ=Africa/Johannesburg \
@@ -22,5 +21,6 @@ RUN ls -a; ls -a ${_path}/fxtrade_common_util
 
 RUN chmod 775 ./install-packages.sh && ./install-packages.sh 
 #user frontendUser
+
 
 CMD [ "python","app.py" ]
