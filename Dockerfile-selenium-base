@@ -1,0 +1,26 @@
+FROM  ubuntu:latest
+
+USER root
+
+ENV  TZ=Africa/Johannesburg \
+     CHROME_VERSION="google-chrome-stable"  \
+     CHROME_DRIVER_VERSION="100.0.4896.60"\
+     DISPLAY=:99 \
+     PATH="/usr/local/bin:/usr/bin:/bin:/usr/bin/env:/usr/src/app:/opt/google/chrome:$PATH"
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+#   SET UP PROXY ENVIRONMENT VARIABLES
+
+# EXPOSE 7000
+
+ARG _path=/app/FXDEALS
+WORKDIR  ${_path}/fxtrade_common_util
+COPY  .  .
+RUN ls -a; ls -a ${_path}/fxtrade_common_util
+
+#COPY ["selenium_python_req","selenium.robot","app.py","./" ]
+
+RUN chmod 775 ./install-packages.sh && ./install-packages.sh 
+#user frontendUser
+
+CMD [ "python","app.py" ]
